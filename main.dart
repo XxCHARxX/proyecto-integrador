@@ -4,7 +4,6 @@ import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -17,17 +16,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFF40E0D0),
-        scaffoldBackgroundColor: const Color(0xFFE0FFFF),
-        appBarTheme: const AppBarTheme(color: Color(0xFF40E0D0), elevation: 0),
+        primaryColor: const Color.fromARGB(255, 13, 161, 38),
+        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+        appBarTheme: const AppBarTheme(color: Color(0xFF0D47A1), elevation: 0),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.white,
+          fillColor: const Color(0xFF0D47A1),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none,
           ),
-          prefixIconColor: Colors.teal,
+          prefixIconColor: const Color(0xFF0D47A1),
         ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(fontSize: 16.0),
@@ -90,64 +89,161 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const Text(
-                  "Iniciar Sesión",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                buildInputField(
-                  "Correo electrónico",
-                  Icons.email,
-                  false,
-                  emailController,
-                ),
-                buildInputField(
-                  "Contraseña",
-                  Icons.lock,
-                  true,
-                  passwordController,
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _signIn,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF40E0D0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 15,
-                    ),
-                  ),
-                  child: const Text(
-                    "Iniciar sesión",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-                TextButton(
-                  onPressed: _resetPassword,
-                  child: const Text("¿Olvidaste tu contraseña?"),
-                ),
-                TextButton(
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => RegisterScreen()),
-                      ),
-                  child: const Text("Registrarse"),
-                ),
-              ],
+      backgroundColor: const Color(0xFFF5F5F5), // ✅ Fondo claro azul suave
+      body: Stack(
+        children: [
+          // ✅ Imagen superior izquierda
+          Positioned(
+            top: 20,
+            left: 20,
+            child: Image.asset('assets/ISC.png', width: 120, height: 100),
+          ),
+
+          // ✅ Imagen superior derecha
+          Positioned(
+            top: 20,
+            right: 20,
+            child: Image.asset('assets/LOGO.png', width: 120, height: 100),
+          ),
+
+          // ✅ Imagen inferior
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/esc.png',
+              fit: BoxFit.cover,
+              height: 240,
             ),
           ),
+
+          // ✅ Contenido principal
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 5),
+
+                    const Text(
+                      "Iniciar Sesión",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF0D47A1),
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    buildInputField(
+                      "Correo electrónico",
+                      Icons.email,
+                      false,
+                      emailController,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    buildInputField(
+                      "Contraseña",
+                      Icons.lock,
+                      true,
+                      passwordController,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    ElevatedButton(
+                      onPressed: _signIn,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0D47A1),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                      ),
+                      child: const Text(
+                        "Iniciar sesión",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    TextButton(
+                      onPressed: _resetPassword,
+                      child: const Text(
+                        "¿Olvidaste tu contraseña?",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 2, 2, 2),
+                        ),
+                      ),
+                    ),
+
+                    TextButton(
+                      onPressed:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterScreen(),
+                            ),
+                          ),
+                      child: const Text(
+                        "Registrarse",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ✅ Campo de entrada personalizado
+  Widget buildInputField(
+    String label,
+    IconData icon,
+    bool isPassword,
+    TextEditingController controller,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextFormField(
+        controller: controller,
+        obscureText: isPassword,
+        style: const TextStyle(color: Colors.black), // ✅ Texto dentro del campo
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(color: Color(0xFF0D47A1)), // ✅ Label azul
+          prefixIcon: Icon(icon, color: Color(0xFF0D47A1)), // ✅ Ícono azul
+          filled: true,
+          fillColor: Colors.white, // ✅ Fondo blanco del campo
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: const BorderSide(color: Color(0xFF0D47A1)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: const BorderSide(color: Color(0xFF1976D2)),
+          ),
         ),
+        validator: (value) => value!.isEmpty ? "Campo requerido" : null,
       ),
     );
   }
@@ -163,13 +259,22 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController ciudadController = TextEditingController();
   final TextEditingController calleController = TextEditingController();
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   RegisterScreen({super.key});
 
   void _register(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const DatosAlumno()),
-    );
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Datos válidos. Registro exitoso')),
+      );
+
+      // Aquí puedes proceder a guardar, enviar o mostrar otra vista si lo deseas.
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, completa todos los campos correctamente')),
+      );
+    }
   }
 
   @override
@@ -178,63 +283,97 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Registro")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            buildInputField("Nombre", Icons.person, false, nombreController),
-            buildInputField(
-              "Apellido",
-              Icons.person_outline,
-              false,
-              apellidoController,
-            ),
-            buildInputField(
-              "Matrícula",
-              Icons.confirmation_number,
-              false,
-              matriculaController,
-            ),
-            buildInputField(
-              "Ciudad",
-              Icons.location_city,
-              false,
-              ciudadController,
-            ),
-            buildInputField("Calle", Icons.home, false, calleController),
-            buildInputField(
-              "Correo electrónico",
-              Icons.email,
-              false,
-              emailController,
-            ),
-            buildInputField("Contraseña", Icons.lock, true, passwordController),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _register(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF40E0D0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              buildInputField("Nombre", Icons.person, false, nombreController, const Color(0xFF0D47A1)),
+              buildInputField("Apellido", Icons.person_outline, false, apellidoController, const Color(0xFF0D47A1)),
+              buildInputField("Matrícula", Icons.confirmation_number, false, matriculaController, const Color(0xFF0D47A1)),
+              buildInputField("Ciudad", Icons.location_city, false, ciudadController, const Color(0xFF0D47A1)),
+              buildInputField("Calle", Icons.home, false, calleController, const Color(0xFF0D47A1)),
+              buildInputField("Correo electrónico", Icons.email, false, emailController, const Color(0xFF0D47A1)),
+              buildInputField("Contraseña", Icons.lock, true, passwordController, const Color(0xFF0D47A1)),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _register(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0D47A1),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 15,
-                ),
+                child: const Text("Registrar"),
               ),
-              child: const Text("Registrar"),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget buildInputField(
+    String hint,
+    IconData icon,
+    bool isPassword,
+    TextEditingController controller,
+    Color iconColor,
+  ) {
+    final FocusNode focusNode = FocusNode();
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        focusNode.addListener(() {
+          setState(() {});
+        });
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: TextFormField(
+            controller: controller,
+            obscureText: isPassword,
+            focusNode: focusNode,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Este campo es obligatorio';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              hintText: hint,
+              prefixIcon: Icon(icon, color: iconColor),
+              filled: true,
+              fillColor: focusNode.hasFocus
+                  ? const Color(0xFF0D47A1).withOpacity(0.85)
+                  : const Color(0xFFBDBDBD),
+              hintStyle: const TextStyle(color: Colors.black54),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: const BorderSide(color: Color(0xFF0D47A1), width: 1.2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: const BorderSide(color: Color(0xFF0D47A1), width: 2),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
+
+
+
 
 // ---------------- DATOS DEL ALUMNO ----------------
 class DatosAlumno extends StatefulWidget {
   const DatosAlumno({super.key});
-  
+
   @override
-  // ignore: library_private_types_in_public_api
   _DatosAlumnoState createState() => _DatosAlumnoState();
 }
 
@@ -249,6 +388,8 @@ class _DatosAlumnoState extends State<DatosAlumno> {
   final TextEditingController telefonoTrabajoController = TextEditingController();
   final TextEditingController telefonoCelularController = TextEditingController();
   bool datosGuardados = false;
+
+  final Color colorPrincipal = const Color(0xFF002855); // Azul oscuro institucional
 
   void _guardar() {
     if (_formKey.currentState!.validate()) {
@@ -272,121 +413,125 @@ class _DatosAlumnoState extends State<DatosAlumno> {
           child: ListView(
             children: [
               _buildField(
-  label: "Matrícula",
-  controller: matriculaController,
-  keyboardType: TextInputType.number,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
-      return 'Debe tener 9 dígitos numéricos';
-    }
-    return null;
-  },
-),
-
-_buildField(
-  label: "Nombre Completo",
-  controller: nombreController,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^[A-ZÁÉÍÓÚÑ ]+$').hasMatch(value)) {
-      return 'Solo letras mayúsculas';
-    }
-    return null;
-  },
-),
-
-_buildField(
-  label: "CURP",
-  controller: curpController,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^[A-Z]{4}\d{6}[A-Z]{7}\d{1}$').hasMatch(value)) {
-      return 'Formato inválido (18 caracteres: 4 letras mayúsculas, 6 números, 7 letras mayúsculas, 1 número)';
-    }
-    return null;
-  },
-),
-
-_buildField(
-  label: "Sexo",
-  controller: sexoController,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^[A-Z]+$').hasMatch(value)) {
-      return 'Debe contener solo mayúsculas';
-    }
-    return null;
-  },
-),
-
-_buildField(
-  label: "Domicilio",
-  controller: domicilioController,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    }
-    return null;
-  },
-),
-
-_buildField(
-  label: "Teléfono de casa",
-  controller: telefonoCasaController,
-  keyboardType: TextInputType.number,
-  maxLength: 10,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-      return 'Debe contener solo 10 dígitos numéricos';
-    }
-    return null;
-  },
-),
-
-
-_buildField(
-  label: "Teléfono de trabajo",
-  controller: telefonoTrabajoController,
-  keyboardType: TextInputType.number,
-  maxLength: 10,
-  validator: (value) {
-    if (value != null && value.isNotEmpty && !RegExp(r'^\d{10}$').hasMatch(value)) {
-      return 'Debe contener exactamente 10 dígitos numéricos';
-    }
-    return null; // válido si está vacío o si cumple la expresión
-  },
-),
-
-
-
- _buildField(
-  label: "Teléfono de celular",
-  controller: telefonoCelularController,
-  keyboardType: TextInputType.number,
-  maxLength: 10,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Campo requerido';
-    } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-      return 'Debe contener solo 10 dígitos numéricos';
-    }
-    return null;
-  },
-),
-
+                label: "Matrícula",
+                controller: matriculaController,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^\d{9}$').hasMatch(value)) {
+                    return 'Debe tener 9 dígitos numéricos';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Nombre Completo",
+                controller: nombreController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^[A-ZÁÉÍÓÚÑ ]+$').hasMatch(value)) {
+                    return 'Solo letras mayúsculas';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "CURP",
+                controller: curpController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^[A-Z]{4}\d{6}[A-Z]{7}\d{1}$').hasMatch(value)) {
+                    return 'Formato inválido (18 caracteres: 4 letras mayúsculas, 6 números, 7 letras mayúsculas, 1 número)';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Sexo",
+                controller: sexoController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^[A-Z]+$').hasMatch(value)) {
+                    return 'Debe contener solo mayúsculas';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Domicilio",
+                controller: domicilioController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Teléfono de casa",
+                controller: telefonoCasaController,
+                keyboardType: TextInputType.number,
+                maxLength: 10,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                    return 'Debe contener solo 10 dígitos numéricos';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Teléfono de trabajo",
+                controller: telefonoTrabajoController,
+                keyboardType: TextInputType.number,
+                maxLength: 10,
+                validator: (value) {
+                  if (value != null &&
+                      value.isNotEmpty &&
+                      !RegExp(r'^\d{10}$').hasMatch(value)) {
+                    return 'Debe contener exactamente 10 dígitos numéricos';
+                  }
+                  return null;
+                },
+              ),
+              _buildField(
+                label: "Teléfono de celular",
+                controller: telefonoCelularController,
+                keyboardType: TextInputType.number,
+                maxLength: 10,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido';
+                  } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                    return 'Debe contener solo 10 dígitos numéricos';
+                  }
+                  return null;
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                     onPressed: _guardar,
-                    child: const Text('Guardar'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colorPrincipal, // Fondo azul
+                      foregroundColor: Colors.white, // Texto blanco
+                      side: BorderSide(color: colorPrincipal, width: 2), // Contorno azul
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Guardar',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -398,29 +543,36 @@ _buildField(
   }
 
   Widget _buildField({
-  required String label,
-  required TextEditingController controller,
-  TextInputType keyboardType = TextInputType.text,
-  int? maxLength,
-  String? Function(String?)? validator,
+    required String label,
+    required TextEditingController controller,
+    TextInputType keyboardType = TextInputType.text,
+    int? maxLength,
+    String? Function(String?)? validator,
   }) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10.0),
-    child: TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+          filled: true,
+          fillColor: const Color(0xFFBDBDBD).withOpacity(0.9), // Más opaco que el fondo
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: colorPrincipal, width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: colorPrincipal, width: 1.5),
+          ),
+        ),
+        keyboardType: keyboardType,
+        maxLength: maxLength,
+        validator: validator,
       ),
-      keyboardType: keyboardType,
-      maxLength: maxLength,
-      validator: validator,
-    ),
-  );
- }
-
+    );
+  }
 }
 
 // ---------------- BIENVENIDA ----------------
@@ -437,7 +589,7 @@ class WelcomeScreen extends StatelessWidget {
             DrawerHeader(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.teal, Colors.tealAccent],
+                  colors: [Color(0xFF5561D4), Color(0xFF0D47A1)],
                 ),
               ),
               child: Column(
@@ -508,7 +660,7 @@ Widget buildMenuItem(
   bool logout = false,
 }) {
   return ListTile(
-    leading: Icon(icon, color: const Color(0xFF40E0D0)),
+    leading: Icon(icon, color: const Color(0xFF0D47A1)),
     title: Text(title),
     onTap: () {
       if (logout) {
@@ -569,6 +721,7 @@ class SeleccionScreen extends StatefulWidget {
   const SeleccionScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SeleccionScreenState createState() => _SeleccionScreenState();
 }
 
@@ -580,174 +733,615 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
 
   final Map<int, Map<String, List<Map<String, String>>>> materiasPorSemestre = {
     1: {
-    'Grupo 1': [
-      {'nombre': 'Cálculo Diferencial', 'profesor': 'Profesor A1', 'grupo': '3101'},
-      {'nombre': 'Fundamentos de Programación', 'profesor': 'Profesor B1', 'grupo': '3101'},
-      {'nombre': 'Taller de Ética', 'profesor': 'Profesor C1', 'grupo': '3101'},
-      {'nombre': 'Matemáticas Discretas', 'profesor': 'Profesor D1', 'grupo': '3101'},
-      {'nombre': 'Taller de Administración', 'profesor': 'Profesor E1', 'grupo': '3101'},
-      {'nombre': 'Álgebra Lineal', 'profesor': 'Profesor F1', 'grupo': '3101'},
-      {'nombre': 'Taller de Lectura y Redacción', 'profesor': 'Profesor G1', 'grupo': '3101'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Cálculo Diferencial', 'profesor': 'Profesor A1', 'grupo': '3102'},
-      {'nombre': 'Fundamentos de Programación', 'profesor': 'Profesor B1', 'grupo': '3102'},
-      {'nombre': 'Taller de Ética', 'profesor': 'Profesor C1', 'grupo': '3102'},
-      {'nombre': 'Matemáticas Discretas', 'profesor': 'Profesor D1', 'grupo': '3102'},
-      {'nombre': 'Taller de Administración', 'profesor': 'Profesor E1', 'grupo': '3102'},
-      {'nombre': 'Álgebra Lineal', 'profesor': 'Profesor F1', 'grupo': '3102'},
-      {'nombre': 'Taller de Lectura y Redacción', 'profesor': 'Profesor G1', 'grupo': '3102'},
-    ],
-  },
-  2: {
-    'Grupo 1': [
-      {'nombre': 'Cálculo Integral', 'profesor': 'Profesor A2', 'grupo': '3201'},
-      {'nombre': 'Programación Orientada a Objetos', 'profesor': 'Profesor B2', 'grupo': '3201'},
-      {'nombre': 'Contabilidad Financiera', 'profesor': 'Profesor C2', 'grupo': '3201'},
-      {'nombre': 'Química', 'profesor': 'Profesor D2', 'grupo': '3201'},
-      {'nombre': 'Sistemas Operativos I', 'profesor': 'Profesor E2', 'grupo': '3201'},
-      {'nombre': 'Probabilidad y Estadística', 'profesor': 'Profesor F2', 'grupo': '3201'},
-      {'nombre': 'Taller de Programación', 'profesor': 'Profesor G2', 'grupo': '3201'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Cálculo Integral', 'profesor': 'Profesor A2', 'grupo': '3202'},
-      {'nombre': 'Programación Orientada a Objetos', 'profesor': 'Profesor B2', 'grupo': '3202'},
-      {'nombre': 'Contabilidad Financiera', 'profesor': 'Profesor C2', 'grupo': '3202'},
-      {'nombre': 'Química', 'profesor': 'Profesor D2', 'grupo': '3202'},
-      {'nombre': 'Sistemas Operativos I', 'profesor': 'Profesor E2', 'grupo': '3202'},
-      {'nombre': 'Probabilidad y Estadística', 'profesor': 'Profesor F2', 'grupo': '3202'},
-      {'nombre': 'Taller de Programación', 'profesor': 'Profesor G2', 'grupo': '3202'},],
-  },
-  3: {
-    'Grupo 1': [
-      {'nombre': 'Cálculo Vectorial', 'profesor': 'Profesor A3', 'grupo': '3301'},
-      {'nombre': 'Estructura de Datos', 'profesor': 'Profesor B3', 'grupo': '3301'},
-      {'nombre': 'Cultura Empresarial', 'profesor': 'Profesor C3', 'grupo': '3301'},
-      {'nombre': 'Investigación de Operaciones I', 'profesor': 'Profesor D3', 'grupo': '3301'},
-      {'nombre': 'Taller de Sistemas Operativos', 'profesor': 'Profesor E3', 'grupo': '3301'},
-      {'nombre': 'Física General', 'profesor': 'Profesor F3', 'grupo': '3301'},
-      {'nombre': 'Actividades Culturales', 'profesor': 'Profesor G3', 'grupo': '3301'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Cálculo Vectorial', 'profesor': 'Profesor A3', 'grupo': '3302'},
-      {'nombre': 'Estructura de Datos', 'profesor': 'Profesor B3', 'grupo': '3302'},
-      {'nombre': 'Cultura Empresarial', 'profesor': 'Profesor C3', 'grupo': '3302'},
-      {'nombre': 'Investigación de Operaciones I', 'profesor': 'Profesor D3', 'grupo': '3302'},
-      {'nombre': 'Taller de Sistemas Operativos', 'profesor': 'Profesor E3', 'grupo': '3302'},
-      {'nombre': 'Física General', 'profesor': 'Profesor F3', 'grupo': '3302'},
-      {'nombre': 'Actividades Culturales', 'profesor': 'Profesor G3', 'grupo': '3302'},
-    ],
-  },
-  4: {
-    'Grupo 1': [
-      {'nombre': 'Ecuaciones Diferenciales', 'profesor': 'Profesor A4', 'grupo': '3401'},
-      {'nombre': 'Tópicos Avanzados de Programación', 'profesor': 'Profesor B4', 'grupo': '3401'},
-      {'nombre': 'Métodos Numéricos', 'profesor': 'Profesor C4', 'grupo': '3401'},
-      {'nombre': 'Fundamentos de Base de Datos', 'profesor': 'Profesor D4', 'grupo': '3401'},
-      {'nombre': 'Fundamentos de Ingeniería de Software', 'profesor': 'Profesor E4', 'grupo': '3401'},
-      {'nombre': 'Principios Eléctricos y Aplicaciones Digitales', 'profesor': 'Profesor F4', 'grupo': '3401'},
-      {'nombre': 'Actividades Deportivas', 'profesor': 'Profesor G4', 'grupo': '3401'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Ecuaciones Diferenciales', 'profesor': 'Profesor A4', 'grupo': '3402'},
-      {'nombre': 'Tópicos Avanzados de Programación', 'profesor': 'Profesor B4', 'grupo': '3402'},
-      {'nombre': 'Métodos Numéricos', 'profesor': 'Profesor C4', 'grupo': '3402'},
-      {'nombre': 'Fundamentos de Base de Datos', 'profesor': 'Profesor D4', 'grupo': '3402'},
-      {'nombre': 'Fundamentos de Ingeniería de Software', 'profesor': 'Profesor E4', 'grupo': '3402'},
-      {'nombre': 'Principios Eléctricos y Aplicaciones Digitales', 'profesor': 'Profesor F4', 'grupo': '3402'},
-      {'nombre': 'Actividades Deportivas', 'profesor': 'Profesor G4', 'grupo': '3402'},
+      'Grupo 1': [
+        {
+          'nombre': 'Cálculo Diferencial',
+          'profesor': 'Profesor A1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Fundamentos de Programación',
+          'profesor': 'Profesor B1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Taller de Ética',
+          'profesor': 'Profesor C1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Matemáticas Discretas',
+          'profesor': 'Profesor D1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Taller de Administración',
+          'profesor': 'Profesor E1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Álgebra Lineal',
+          'profesor': 'Profesor F1',
+          'grupo': '3101',
+        },
+        {
+          'nombre': 'Taller de Lectura y Redacción',
+          'profesor': 'Profesor G1',
+          'grupo': '3101',
+        },
       ],
-  },
-  5: {
-    'Grupo 1': [
-      {'nombre': 'Simulación', 'profesor': 'Profesor A5', 'grupo': '3501'},
-      {'nombre': 'Fundamentos de Telecomunicaciones', 'profesor': 'Profesor B5', 'grupo': '3501'},
-      {'nombre': 'Programación Web', 'profesor': 'Profesor C5', 'grupo': '3501'},
-      {'nombre': 'Taller de Base de Datos', 'profesor': 'Profesor D5', 'grupo': '3501'},
-      {'nombre': 'Ingeniería de Requerimientos', 'profesor': 'Profesor E5', 'grupo': '3501'},
-      {'nombre': 'Arquitectura de Computadoras', 'profesor': 'Profesor F5', 'grupo': '3501'},
-      {'nombre': 'Taller de Emprendedor', 'profesor': 'Profesor G5', 'grupo': '3501'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Simulación', 'profesor': 'Profesor A5', 'grupo': '3502'},
-      {'nombre': 'Fundamentos de Telecomunicaciones', 'profesor': 'Profesor B5', 'grupo': '3502'},
-      {'nombre': 'Programación Web', 'profesor': 'Profesor C5', 'grupo': '3502'},
-      {'nombre': 'Taller de Base de Datos', 'profesor': 'Profesor D5', 'grupo': '3502'},
-      {'nombre': 'Ingeniería de Requerimientos', 'profesor': 'Profesor E5', 'grupo': '3502'},
-      {'nombre': 'Arquitectura de Computadoras', 'profesor': 'Profesor F5', 'grupo': '3502'},
-      {'nombre': 'Taller de Emprendedor', 'profesor': 'Profesor G5', 'grupo': '3502'},
-    ],
-  },
-  6: {
-    'Grupo 1': [
-      {'nombre': 'Lenguajes y Autómatas I', 'profesor': 'Profesor A6', 'grupo': '3601'},
-      {'nombre': 'Redes de Computadoras', 'profesor': 'Profesor B6', 'grupo': '3601'},
-      {'nombre': 'Desarrollo Sustentable', 'profesor': 'Profesor C6', 'grupo': '3601'},
-      {'nombre': 'Administración de Base de Datos', 'profesor': 'Profesor D6', 'grupo': '3601'},
-      {'nombre': 'Fundamentos de Investigación II', 'profesor': 'Profesor E6', 'grupo': '3601'},
-      {'nombre': 'Lenguaje de Interfaz', 'profesor': 'Profesor F6', 'grupo': '3601'},
-      {'nombre': 'Servicio Social', 'profesor': 'Profesor G6', 'grupo': '3601'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Lenguajes y Autómatas I', 'profesor': 'Profesor A6', 'grupo': '3602'},
-      {'nombre': 'Redes de Computadoras', 'profesor': 'Profesor B6', 'grupo': '3602'},
-      {'nombre': 'Desarrollo Sustentable', 'profesor': 'Profesor C6', 'grupo': '3602'},
-      {'nombre': 'Administración de Base de Datos', 'profesor': 'Profesor D6', 'grupo': '3602'},
-      {'nombre': 'Fundamentos de Investigación II', 'profesor': 'Profesor E6', 'grupo': '3602'},
-      {'nombre': 'Lenguaje de Interfaz', 'profesor': 'Profesor F6', 'grupo': '3602'},
-      {'nombre': 'Servicio Social', 'profesor': 'Profesor G6', 'grupo': '3602'},
-    ],
-  },
-  7: {
-    'Grupo 1': [
-      {'nombre': 'Lenguajes y Autómatas II', 'profesor': 'Profesor A7', 'grupo': '3701'},
-      {'nombre': 'Lenguajes de Programación', 'profesor': 'Profesor B7', 'grupo': '3701'},
-      {'nombre': 'Inteligencia Artificial', 'profesor': 'Profesor C7', 'grupo': '3701'},
-      {'nombre': 'Programación Lógica y Funcional', 'profesor': 'Profesor D7', 'grupo': '3701'},
-      {'nombre': 'Taller de Investigación I', 'profesor': 'Profesor E7', 'grupo': '3701'},
-      {'nombre': 'Gestión de Proyectos de Software', 'profesor': 'Profesor F7', 'grupo': '3701'},
-      {'nombre': 'Sistemas Programables', 'profesor': 'Profesor G7', 'grupo': '3701'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Lenguajes y Autómatas II', 'profesor': 'Profesor A7', 'grupo': '3702'},
-      {'nombre': 'Lenguajes de Programación', 'profesor': 'Profesor B7', 'grupo': '3702'},
-      {'nombre': 'Inteligencia Artificial', 'profesor': 'Profesor C7', 'grupo': '3702'},
-      {'nombre': 'Programación Lógica y Funcional', 'profesor': 'Profesor D7', 'grupo': '3702'},
-      {'nombre': 'Taller de Investigación I', 'profesor': 'Profesor E7', 'grupo': '3702'},
-      {'nombre': 'Gestión de Proyectos de Software', 'profesor': 'Profesor F7', 'grupo': '3702'},
-      {'nombre': 'Sistemas Programables', 'profesor': 'Profesor G7', 'grupo': '3702'},
-    ],
-  },
-  8: {
-    'Grupo 1': [
-      {'nombre': 'Desarrollo de Aplicaciones Móviles', 'profesor': 'Profesor A8', 'grupo': '3801'},
-      {'nombre': 'Enrutamiento de Redes', 'profesor': 'Profesor B8', 'grupo': '3801'},
-      {'nombre': 'Modelos y Ciencia de Datos', 'profesor': 'Profesor C8', 'grupo': '3801'},
-      {'nombre': 'Inteligencia de Negocios', 'profesor': 'Profesor D8', 'grupo': '3801'},
-      {'nombre': 'Taller de Investigación II', 'profesor': 'Profesor E8', 'grupo': '3801'},
-      {'nombre': 'Gráficación', 'profesor': 'Profesor F8', 'grupo': '3801'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Desarrollo de Aplicaciones Móviles', 'profesor': 'Profesor A8', 'grupo': '3802'},
-      {'nombre': 'Enrutamiento de Redes', 'profesor': 'Profesor B8', 'grupo': '3802'},
-      {'nombre': 'Modelos y Ciencia de Datos', 'profesor': 'Profesor C8', 'grupo': '3802'},
-      {'nombre': 'Inteligencia de Negocios', 'profesor': 'Profesor D8', 'grupo': '3802'},
-      {'nombre': 'Taller de Investigación II', 'profesor': 'Profesor E8', 'grupo': '3802'},
-      {'nombre': 'Gráficación', 'profesor': 'Profesor F8', 'grupo': '3802'},
-    ],
-  },
-  9: {
-    'Grupo 1': [
-      {'nombre': 'Internet de las Cosas', 'profesor': 'Profesor A9', 'grupo': '3901'},
-      {'nombre': 'Analítica Inteligente de Datos', 'profesor': 'Profesor B9', 'grupo': '3901'},
-      {'nombre': 'Residencia Profesional', 'profesor': 'Profesor C9', 'grupo': '3901'},
-    ],
-    'Grupo 2': [
-      {'nombre': 'Internet de las Cosas', 'profesor': 'Profesor A9', 'grupo': '3902'},
-      {'nombre': 'Analítica Inteligente de Datos', 'profesor': 'Profesor B9', 'grupo': '3902'},
-      {'nombre': 'Residencia Profesional', 'profesor': 'Profesor C9', 'grupo': '3902'},
+      'Grupo 2': [
+        {
+          'nombre': 'Cálculo Diferencial',
+          'profesor': 'Profesor A1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Fundamentos de Programación',
+          'profesor': 'Profesor B1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Taller de Ética',
+          'profesor': 'Profesor C1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Matemáticas Discretas',
+          'profesor': 'Profesor D1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Taller de Administración',
+          'profesor': 'Profesor E1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Álgebra Lineal',
+          'profesor': 'Profesor F1',
+          'grupo': '3102',
+        },
+        {
+          'nombre': 'Taller de Lectura y Redacción',
+          'profesor': 'Profesor G1',
+          'grupo': '3102',
+        },
       ],
-  },
+    },
+    2: {
+      'Grupo 1': [
+        {
+          'nombre': 'Cálculo Integral',
+          'profesor': 'Profesor A2',
+          'grupo': '3201',
+        },
+        {
+          'nombre': 'Programación Orientada a Objetos',
+          'profesor': 'Profesor B2',
+          'grupo': '3201',
+        },
+        {
+          'nombre': 'Contabilidad Financiera',
+          'profesor': 'Profesor C2',
+          'grupo': '3201',
+        },
+        {'nombre': 'Química', 'profesor': 'Profesor D2', 'grupo': '3201'},
+        {
+          'nombre': 'Sistemas Operativos I',
+          'profesor': 'Profesor E2',
+          'grupo': '3201',
+        },
+        {
+          'nombre': 'Probabilidad y Estadística',
+          'profesor': 'Profesor F2',
+          'grupo': '3201',
+        },
+        {
+          'nombre': 'Taller de Programación',
+          'profesor': 'Profesor G2',
+          'grupo': '3201',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Cálculo Integral',
+          'profesor': 'Profesor A2',
+          'grupo': '3202',
+        },
+        {
+          'nombre': 'Programación Orientada a Objetos',
+          'profesor': 'Profesor B2',
+          'grupo': '3202',
+        },
+        {
+          'nombre': 'Contabilidad Financiera',
+          'profesor': 'Profesor C2',
+          'grupo': '3202',
+        },
+        {'nombre': 'Química', 'profesor': 'Profesor D2', 'grupo': '3202'},
+        {
+          'nombre': 'Sistemas Operativos I',
+          'profesor': 'Profesor E2',
+          'grupo': '3202',
+        },
+        {
+          'nombre': 'Probabilidad y Estadística',
+          'profesor': 'Profesor F2',
+          'grupo': '3202',
+        },
+        {
+          'nombre': 'Taller de Programación',
+          'profesor': 'Profesor G2',
+          'grupo': '3202',
+        },
+      ],
+    },
+    3: {
+      'Grupo 1': [
+        {
+          'nombre': 'Cálculo Vectorial',
+          'profesor': 'Profesor A3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Estructura de Datos',
+          'profesor': 'Profesor B3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Cultura Empresarial',
+          'profesor': 'Profesor C3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Investigación de Operaciones I',
+          'profesor': 'Profesor D3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Taller de Sistemas Operativos',
+          'profesor': 'Profesor E3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Física General',
+          'profesor': 'Profesor F3',
+          'grupo': '3301',
+        },
+        {
+          'nombre': 'Actividades Culturales',
+          'profesor': 'Profesor G3',
+          'grupo': '3301',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Cálculo Vectorial',
+          'profesor': 'Profesor A3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Estructura de Datos',
+          'profesor': 'Profesor B3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Cultura Empresarial',
+          'profesor': 'Profesor C3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Investigación de Operaciones I',
+          'profesor': 'Profesor D3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Taller de Sistemas Operativos',
+          'profesor': 'Profesor E3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Física General',
+          'profesor': 'Profesor F3',
+          'grupo': '3302',
+        },
+        {
+          'nombre': 'Actividades Culturales',
+          'profesor': 'Profesor G3',
+          'grupo': '3302',
+        },
+      ],
+    },
+    4: {
+      'Grupo 1': [
+        {
+          'nombre': 'Ecuaciones Diferenciales',
+          'profesor': 'Profesor A4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Tópicos Avanzados de Programación',
+          'profesor': 'Profesor B4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Métodos Numéricos',
+          'profesor': 'Profesor C4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Fundamentos de Base de Datos',
+          'profesor': 'Profesor D4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Fundamentos de Ingeniería de Software',
+          'profesor': 'Profesor E4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Principios Eléctricos y Aplicaciones Digitales',
+          'profesor': 'Profesor F4',
+          'grupo': '3401',
+        },
+        {
+          'nombre': 'Actividades Deportivas',
+          'profesor': 'Profesor G4',
+          'grupo': '3401',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Ecuaciones Diferenciales',
+          'profesor': 'Profesor A4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Tópicos Avanzados de Programación',
+          'profesor': 'Profesor B4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Métodos Numéricos',
+          'profesor': 'Profesor C4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Fundamentos de Base de Datos',
+          'profesor': 'Profesor D4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Fundamentos de Ingeniería de Software',
+          'profesor': 'Profesor E4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Principios Eléctricos y Aplicaciones Digitales',
+          'profesor': 'Profesor F4',
+          'grupo': '3402',
+        },
+        {
+          'nombre': 'Actividades Deportivas',
+          'profesor': 'Profesor G4',
+          'grupo': '3402',
+        },
+      ],
+    },
+    5: {
+      'Grupo 1': [
+        {'nombre': 'Simulación', 'profesor': 'Profesor A5', 'grupo': '3501'},
+        {
+          'nombre': 'Fundamentos de Telecomunicaciones',
+          'profesor': 'Profesor B5',
+          'grupo': '3501',
+        },
+        {
+          'nombre': 'Programación Web',
+          'profesor': 'Profesor C5',
+          'grupo': '3501',
+        },
+        {
+          'nombre': 'Taller de Base de Datos',
+          'profesor': 'Profesor D5',
+          'grupo': '3501',
+        },
+        {
+          'nombre': 'Ingeniería de Requerimientos',
+          'profesor': 'Profesor E5',
+          'grupo': '3501',
+        },
+        {
+          'nombre': 'Arquitectura de Computadoras',
+          'profesor': 'Profesor F5',
+          'grupo': '3501',
+        },
+        {
+          'nombre': 'Taller de Emprendedor',
+          'profesor': 'Profesor G5',
+          'grupo': '3501',
+        },
+      ],
+      'Grupo 2': [
+        {'nombre': 'Simulación', 'profesor': 'Profesor A5', 'grupo': '3502'},
+        {
+          'nombre': 'Fundamentos de Telecomunicaciones',
+          'profesor': 'Profesor B5',
+          'grupo': '3502',
+        },
+        {
+          'nombre': 'Programación Web',
+          'profesor': 'Profesor C5',
+          'grupo': '3502',
+        },
+        {
+          'nombre': 'Taller de Base de Datos',
+          'profesor': 'Profesor D5',
+          'grupo': '3502',
+        },
+        {
+          'nombre': 'Ingeniería de Requerimientos',
+          'profesor': 'Profesor E5',
+          'grupo': '3502',
+        },
+        {
+          'nombre': 'Arquitectura de Computadoras',
+          'profesor': 'Profesor F5',
+          'grupo': '3502',
+        },
+        {
+          'nombre': 'Taller de Emprendedor',
+          'profesor': 'Profesor G5',
+          'grupo': '3502',
+        },
+      ],
+    },
+    6: {
+      'Grupo 1': [
+        {
+          'nombre': 'Lenguajes y Autómatas I',
+          'profesor': 'Profesor A6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Redes de Computadoras',
+          'profesor': 'Profesor B6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Desarrollo Sustentable',
+          'profesor': 'Profesor C6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Administración de Base de Datos',
+          'profesor': 'Profesor D6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Fundamentos de Investigación II',
+          'profesor': 'Profesor E6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Lenguaje de Interfaz',
+          'profesor': 'Profesor F6',
+          'grupo': '3601',
+        },
+        {
+          'nombre': 'Servicio Social',
+          'profesor': 'Profesor G6',
+          'grupo': '3601',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Lenguajes y Autómatas I',
+          'profesor': 'Profesor A6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Redes de Computadoras',
+          'profesor': 'Profesor B6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Desarrollo Sustentable',
+          'profesor': 'Profesor C6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Administración de Base de Datos',
+          'profesor': 'Profesor D6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Fundamentos de Investigación II',
+          'profesor': 'Profesor E6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Lenguaje de Interfaz',
+          'profesor': 'Profesor F6',
+          'grupo': '3602',
+        },
+        {
+          'nombre': 'Servicio Social',
+          'profesor': 'Profesor G6',
+          'grupo': '3602',
+        },
+      ],
+    },
+    7: {
+      'Grupo 1': [
+        {
+          'nombre': 'Lenguajes y Autómatas II',
+          'profesor': 'Profesor A7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Lenguajes de Programación',
+          'profesor': 'Profesor B7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Inteligencia Artificial',
+          'profesor': 'Profesor C7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Programación Lógica y Funcional',
+          'profesor': 'Profesor D7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Taller de Investigación I',
+          'profesor': 'Profesor E7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Gestión de Proyectos de Software',
+          'profesor': 'Profesor F7',
+          'grupo': '3701',
+        },
+        {
+          'nombre': 'Sistemas Programables',
+          'profesor': 'Profesor G7',
+          'grupo': '3701',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Lenguajes y Autómatas II',
+          'profesor': 'Profesor A7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Lenguajes de Programación',
+          'profesor': 'Profesor B7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Inteligencia Artificial',
+          'profesor': 'Profesor C7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Programación Lógica y Funcional',
+          'profesor': 'Profesor D7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Taller de Investigación I',
+          'profesor': 'Profesor E7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Gestión de Proyectos de Software',
+          'profesor': 'Profesor F7',
+          'grupo': '3702',
+        },
+        {
+          'nombre': 'Sistemas Programables',
+          'profesor': 'Profesor G7',
+          'grupo': '3702',
+        },
+      ],
+    },
+    8: {
+      'Grupo 1': [
+        {
+          'nombre': 'Desarrollo de Aplicaciones Móviles',
+          'profesor': 'Profesor A8',
+          'grupo': '3801',
+        },
+        {
+          'nombre': 'Enrutamiento de Redes',
+          'profesor': 'Profesor B8',
+          'grupo': '3801',
+        },
+        {
+          'nombre': 'Modelos y Ciencia de Datos',
+          'profesor': 'Profesor C8',
+          'grupo': '3801',
+        },
+        {
+          'nombre': 'Inteligencia de Negocios',
+          'profesor': 'Profesor D8',
+          'grupo': '3801',
+        },
+        {
+          'nombre': 'Taller de Investigación II',
+          'profesor': 'Profesor E8',
+          'grupo': '3801',
+        },
+        {'nombre': 'Gráficación', 'profesor': 'Profesor F8', 'grupo': '3801'},
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Desarrollo de Aplicaciones Móviles',
+          'profesor': 'Profesor A8',
+          'grupo': '3802',
+        },
+        {
+          'nombre': 'Enrutamiento de Redes',
+          'profesor': 'Profesor B8',
+          'grupo': '3802',
+        },
+        {
+          'nombre': 'Modelos y Ciencia de Datos',
+          'profesor': 'Profesor C8',
+          'grupo': '3802',
+        },
+        {
+          'nombre': 'Inteligencia de Negocios',
+          'profesor': 'Profesor D8',
+          'grupo': '3802',
+        },
+        {
+          'nombre': 'Taller de Investigación II',
+          'profesor': 'Profesor E8',
+          'grupo': '3802',
+        },
+        {'nombre': 'Gráficación', 'profesor': 'Profesor F8', 'grupo': '3802'},
+      ],
+    },
+    9: {
+      'Grupo 1': [
+        {
+          'nombre': 'Internet de las Cosas',
+          'profesor': 'Profesor A9',
+          'grupo': '3901',
+        },
+        {
+          'nombre': 'Analítica Inteligente de Datos',
+          'profesor': 'Profesor B9',
+          'grupo': '3901',
+        },
+        {
+          'nombre': 'Residencia Profesional',
+          'profesor': 'Profesor C9',
+          'grupo': '3901',
+        },
+      ],
+      'Grupo 2': [
+        {
+          'nombre': 'Internet de las Cosas',
+          'profesor': 'Profesor A9',
+          'grupo': '3902',
+        },
+        {
+          'nombre': 'Analítica Inteligente de Datos',
+          'profesor': 'Profesor B9',
+          'grupo': '3902',
+        },
+        {
+          'nombre': 'Residencia Profesional',
+          'profesor': 'Profesor C9',
+          'grupo': '3902',
+        },
+      ],
+    },
   };
 
   void seleccionarGrupo(int semestre, String grupo) {
@@ -761,19 +1355,21 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
   }
 
   void agregarMateria(Map<String, String> materia) {
-  final materiaConSemestre = {
-    ...materia,
-    'semestre': semestreSeleccionado.toString(), // Guardamos el semestre aquí
-  };
+    final materiaConSemestre = {
+      ...materia,
+      'semestre': semestreSeleccionado.toString(), // Guardamos el semestre aquí
+    };
 
-  if (!materiasCargadas.any((m) =>
-      m['nombre'] == materiaConSemestre['nombre'] &&
-      m['grupo'] == materiaConSemestre['grupo'])) {
-    setState(() {
-      materiasCargadas.add(materiaConSemestre);
-    });
+    if (!materiasCargadas.any(
+      (m) =>
+          m['nombre'] == materiaConSemestre['nombre'] &&
+          m['grupo'] == materiaConSemestre['grupo'],
+    )) {
+      setState(() {
+        materiasCargadas.add(materiaConSemestre);
+      });
+    }
   }
-}
 
   void eliminarMateria(int index) {
     setState(() {
@@ -788,22 +1384,35 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
 
     pdf.addPage(
       pw.Page(
-        build: (pw.Context context) => pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Text('Lista de Materias Cargadas', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
-            pw.Text('Fecha: $formattedDate'),
-            pw.SizedBox(height: 10),
-            pw.Table.fromTextArray(
-              headers: ['Nombre', 'Profesor', 'Grupo'],
-              data: materiasCargadas.map((materia) => [
-                materia['nombre'],
-                materia['profesor'],
-                materia['grupo']
-              ]).toList(),
+        build:
+            (pw.Context context) => pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  'Lista de Materias Cargadas',
+                  style: pw.TextStyle(
+                    fontSize: 20,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.Text('Fecha: $formattedDate'),
+                pw.SizedBox(height: 10),
+                // ignore: deprecated_member_use
+                pw.Table.fromTextArray(
+                  headers: ['Nombre', 'Profesor', 'Grupo'],
+                  data:
+                      materiasCargadas
+                          .map(
+                            (materia) => [
+                              materia['nombre'],
+                              materia['profesor'],
+                              materia['grupo'],
+                            ],
+                          )
+                          .toList(),
+                ),
+              ],
             ),
-          ],
-        ),
       ),
     );
 
@@ -819,66 +1428,70 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
     }
 
     showDialog(
-  context: context,
-  builder: (context) => AlertDialog(
-    title: Text('Materias guardadas correctamente'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
-          child: SingleChildScrollView(
-            child: Column(
-              children: materiasCargadas.map((materia) {
-                return ListTile(
-                  title: Text(materia['nombre']!),
-                  subtitle: Text('Profesor: ${materia['profesor']}'),
-                  trailing: Text('Grupo: ${materia['grupo']}'),
-                );
-              }).toList(),
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text('Materias guardadas correctamente'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children:
+                          materiasCargadas.map((materia) {
+                            return ListTile(
+                              title: Text(materia['nombre']!),
+                              subtitle: Text(
+                                'Profesor: ${materia['profesor']}',
+                              ),
+                              trailing: Text('Grupo: ${materia['grupo']}'),
+                            );
+                          }).toList(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('Cerrar'),
+                    ),
+                    SizedBox(width: 8),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        await imprimirMaterias();
+                      },
+                      child: Text('Imprimir'),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cerrar'),
-            ),
-            SizedBox(width: 8),
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context);
-                await imprimirMaterias();
-              },
-              child: Text('Imprimir'),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ),
-);
-
+    );
   }
 
   bool _bloqueadoPorCondicion(int semestre) {
-  final cargadosPorSemestre = materiasCargadas
-      .map((m) => int.tryParse(m['semestre'] ?? ''))
-      .whereType<int>()
-      .toSet();
+    final cargadosPorSemestre =
+        materiasCargadas
+            .map((m) => int.tryParse(m['semestre'] ?? ''))
+            .whereType<int>()
+            .toSet();
 
-  if (semestre >= 1 && semestre <= 4) {
-    return cargadosPorSemestre.any((s) => s != semestre && s >= 1 && s <= 4);
+    if (semestre >= 1 && semestre <= 4) {
+      return cargadosPorSemestre.any((s) => s != semestre && s >= 1 && s <= 4);
+    }
+
+    if (semestre >= 5 && semestre <= 9) {
+      return cargadosPorSemestre.any((s) => s != semestre && s >= 5 && s <= 9);
+    }
+
+    return false;
   }
-
-  if (semestre >= 5 && semestre <= 9) {
-    return cargadosPorSemestre.any((s) => s != semestre && s >= 5 && s <= 9);
-  }
-
-  return false;
-}
 
   Widget crearBotonGrupo(int semestre, String grupo) {
     final bool bloqueado = _bloqueadoPorCondicion(semestre);
@@ -908,7 +1521,10 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Text("SEMESTRE AL QUE CURSARÁS", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              "SEMESTRE AL QUE CURSARÁS",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
@@ -921,14 +1537,23 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
                         return Expanded(
                           child: Column(
                             children: [
-                              Text("Semestre $semestre", style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                "Semestre $semestre",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               if (materiasPorSemestre.containsKey(semestre))
                                 Wrap(
                                   spacing: 4,
                                   runSpacing: 4,
-                                  children: materiasPorSemestre[semestre]!.keys
-                                      .map((grupo) => crearBotonGrupo(semestre, grupo))
-                                      .toList(),
+                                  children:
+                                      materiasPorSemestre[semestre]!.keys
+                                          .map(
+                                            (grupo) => crearBotonGrupo(
+                                              semestre,
+                                              grupo,
+                                            ),
+                                          )
+                                          .toList(),
                                 ),
                             ],
                           ),
@@ -943,14 +1568,23 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
                         return Expanded(
                           child: Column(
                             children: [
-                              Text("Semestre $semestre", style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                "Semestre $semestre",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               if (materiasPorSemestre.containsKey(semestre))
                                 Wrap(
                                   spacing: 4,
                                   runSpacing: 4,
-                                  children: materiasPorSemestre[semestre]!.keys
-                                      .map((grupo) => crearBotonGrupo(semestre, grupo))
-                                      .toList(),
+                                  children:
+                                      materiasPorSemestre[semestre]!.keys
+                                          .map(
+                                            (grupo) => crearBotonGrupo(
+                                              semestre,
+                                              grupo,
+                                            ),
+                                          )
+                                          .toList(),
                                 ),
                             ],
                           ),
@@ -963,7 +1597,10 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
             ),
             Divider(),
             if (materiasDelSemestre.isNotEmpty) ...[
-              Text("MATERIAS DEL GRUPO SELECCIONADO", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                "MATERIAS DEL GRUPO SELECCIONADO",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               SizedBox(
                 height: 150,
                 child: ListView.builder(
@@ -984,7 +1621,10 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
               ),
             ],
             Divider(),
-            Text("MATERIAS CARGADAS", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              "MATERIAS CARGADAS",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: materiasCargadas.length,
@@ -1002,18 +1642,13 @@ class _SeleccionScreenState extends State<SeleccionScreen> {
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: guardarMaterias,
-              child: Text("GUARDAR"),
-            ),
+            ElevatedButton(onPressed: guardarMaterias, child: Text("GUARDAR")),
           ],
         ),
       ),
     );
   }
 }
-
-
 
 // ---------------- ESTADÍSTICAS ----------------
 class EstadisticasScreen extends StatefulWidget {
@@ -1040,7 +1675,7 @@ class _EstadisticasScreenState extends State<EstadisticasScreen> {
           'Estadísticas Académicas',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.shade300,
+        backgroundColor: const Color(0xFF0D47A1),
         elevation: 2,
       ),
       body: Padding(
@@ -1052,7 +1687,7 @@ class _EstadisticasScreenState extends State<EstadisticasScreen> {
               'Selecciona el semestre:',
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.blue.shade900,
+                color: const Color.fromARGB(0, 0, 0, 0),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -1067,7 +1702,7 @@ class _EstadisticasScreenState extends State<EstadisticasScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         selectedSemester == index + 1
-                            ? Colors.blue
+                            ? const Color(0xFF0D47A1)
                             : Colors.grey.shade300,
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(20),
@@ -1086,7 +1721,7 @@ class _EstadisticasScreenState extends State<EstadisticasScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 10),
             // Gráfica
             Expanded(
               child: Column(
@@ -1115,7 +1750,7 @@ class _EstadisticasScreenState extends State<EstadisticasScreen> {
               borderRadius: BorderRadius.circular(12),
               child: Container(
                 width: double.infinity,
-                color: Colors.blue.shade50,
+                color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
@@ -1219,7 +1854,7 @@ class _InscripcionScreenState extends State<InscripcionScreen> {
             onPressed: () => seleccionarArchivo(onFileSelected),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: Color.fromARGB(255, 67, 205, 191),
+              foregroundColor: Color(0xFF0D47A1),
             ),
             child: Text(
               archivoNombre ?? "Adjuntar archivo\n(1000 KB)",
@@ -1288,7 +1923,7 @@ class _InscripcionScreenState extends State<InscripcionScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: const Color.fromARGB(255, 67, 205, 191),
+                  foregroundColor: const Color(0xFF0D47A1),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,
@@ -1319,7 +1954,7 @@ Widget buildInputField(
       style: const TextStyle(fontSize: 16),
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: Icon(icon, color: Colors.teal),
+        prefixIcon: Icon(icon, color: const Color(0xFF0D47A1)),
         filled: true,
         fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(
@@ -1332,7 +1967,7 @@ Widget buildInputField(
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(color: Colors.teal, width: 2),
+          borderSide: const BorderSide(color: Color(0xFF0D47A1), width: 2),
         ),
       ),
     ),
